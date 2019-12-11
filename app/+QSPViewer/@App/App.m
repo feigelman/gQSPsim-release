@@ -954,16 +954,16 @@ classdef App < uix.abstract.AppWithSessionFiles & uix.mixin.ViewPaneManager
         function checkForUpdates()
 
             w = weboptions('CertificateFile','');
-            webData = webread('https://api.github.com/repos/feigelman/gQSPsim/tags', w); % TODO: correct repo!
+            webData = webread('https://api.github.com/repos/feigelman/gQSPsim-release/tags', w); % TODO: correct repo!
 
             if ~isempty(webData) && isstruct(webData) && isfield(webData,'name')
                 webVersion = webData(1).name;
                 if ~strcmp(webVersion, QSPViewer.App.Version)            
-                    doUpdate = questdlg('A newer version of gQSPsim is available. Please visit the gQSPsim repository http:\\www.github.com\feigelman\gQSPsim\ for the latest version.', ...                
+                    doUpdate = questdlg('A newer version of gQSPsim is available. Please visit the gQSPsim repository http://www.github.com/feigelman/gQSPsim-release/ for the latest version.', ...                
                         'Newer version available', ...
                         'Get latest version', 'Cancel', 'Get latest version');
                     if strcmp(doUpdate,  'Get latest version')
-                        web('https://www.github.com/feigelman/gQSPsim','-browser');
+                        web('https://www.github.com/feigelman/gQSPsim-release','-browser');
                     end
                 end
             end
