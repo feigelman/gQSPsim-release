@@ -160,7 +160,7 @@ classdef (Abstract) BaseProps < matlab.mixin.SetGet & matlab.mixin.Heterogeneous
                         %RAJ - again this okpList is a bit slow. Would be better to
                         %persist the needed info for each utilized class somewhere.
                         defaultValue = okpList(isThisProp).DefaultValue;
-                    elseif ~isempty(obj)
+                    elseif ~isempty(obj) && isvalid(obj)
                         defaultValue = obj(1).(thisProp);
                     else
                         defaultValue = [];
@@ -244,7 +244,11 @@ classdef (Abstract) BaseProps < matlab.mixin.SetGet & matlab.mixin.Heterogeneous
                         % the value of thisProp in each obj instance might be array of
                         % different sizes.
                         for idx = 1:numel(obj)
-                            pValue = obj(idx).(thisProp);
+                            if isvalid(obj)
+                                pValue = obj(idx).(thisProp);
+                            else
+                                pValue=[];
+                            end
                             if isempty(pValue)
                                 if isempty(defaultValue)
                                     pValue = defaultValue;
@@ -254,6 +258,8 @@ classdef (Abstract) BaseProps < matlab.mixin.SetGet & matlab.mixin.Heterogeneous
                             elseif ischar(defaultValue) && ~iscell(pValue) % && iscell(pValue)
                                 pValue = char(pValue);                            
                             end
+                        
+                            
                             copyProperty(newObj(idx),thisProp,pValue);                            
                         end
                         

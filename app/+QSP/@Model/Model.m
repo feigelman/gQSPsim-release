@@ -134,7 +134,8 @@ classdef Model < QSP.abstract.BaseProps
                     AllModels = [];
                 end     
                 if ~isempty(AllModels) && isstruct(AllModels)
-                    AllModels = cell2mat(struct2cell(AllModels));
+                    models = struct2cell(AllModels);
+                    AllModels = [models{:}];                    
                     m1 = sbioselect(AllModels,'type','sbiomodel');
                     if ~isempty(m1)
                         ModelNames = get(m1,'Name');
@@ -182,7 +183,8 @@ classdef Model < QSP.abstract.BaseProps
             end
             
             if StatusOk
-                AllModels = cell2mat(struct2cell(AllModels));
+                models = struct2cell(AllModels);
+                AllModels = [models{:}];                
                 m1 = sbioselect(AllModels,'type','sbiomodel');
                 
                 if isempty(m1)
@@ -286,7 +288,17 @@ classdef Model < QSP.abstract.BaseProps
         function Value = get.SpeciesNames(obj)
             if ~isempty(obj.mObj)
                 Value = sbioselect(obj.mObj, 'Type', 'Species');
-                Value = get(Value,'Name');
+                
+                nComp = length(sbioselect(obj.mObj, 'Type', 'Compartment'));
+                Value2 = {};
+                if nComp>1
+                    for k=1:length(Value)
+                        Value2{k} = sprintf('%s.%s', get(Value(k).Parent, 'Name'), Value(k).Name);
+                    end
+                    Value = Value2';
+                else
+                    Value = get(Value,'Name');
+                end
                 if isempty(Value)
                     Value = cell(0,1);
                 elseif ischar(Value)

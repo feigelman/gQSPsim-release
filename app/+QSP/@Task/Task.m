@@ -386,6 +386,9 @@ classdef Task < QSP.abstract.BaseProps & uix.mixin.HasTreeReference
                     ModelName = TheseModelNames{MatchIdx};
                     obj.ModelName = ModelName;
                 end
+            else
+                obj.ModelName = ModelName;
+
             end
             
             ThisData = [TheseFilePaths TheseModelNames];

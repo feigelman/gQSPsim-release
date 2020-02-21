@@ -161,7 +161,7 @@ if EchoOutput
 end
 
 % run the units script
-units
+registerUnits;
 
 if nargout == 1
     varargout{1} = QSPViewer.App();

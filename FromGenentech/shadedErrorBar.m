@@ -129,6 +129,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Plot to get the parameters of the line
+hold(parent,'on')
 H.meanLine=plot(x,y,lineProps{:},'linewidth',meanlinewidth,'parent',parent,'Tag','MeanLine');
 H.medianLine=plot(x,ymed,lineProps{:},'linewidth',medianlinewidth,'parent',parent,'Tag','MedianLine');
 
@@ -137,7 +138,7 @@ H.medianLine=plot(x,ymed,lineProps{:},'linewidth',medianlinewidth,'parent',paren
 % Here we have the option of choosing alpha or a de-saturated
 % solid colour for the patch surface.
 
-col=get(H.meanLine,'color');
+col=get(H.medianLine,'color');
 edgeColor=col+(1-col)*0.55;
 patchSaturation=0.15; % How de-saturated or transparent to make patch
 if transparent

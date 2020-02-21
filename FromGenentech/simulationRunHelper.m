@@ -152,10 +152,10 @@ if ~isempty(ItemModels)
         UDF_files = dir(fullfile(taskObj.Session.UserDefinedFunctionsDirectory,'**','*.m'));
         UDF_files = arrayfun(@(x) fullfile(x.folder,x.name), UDF_files, 'UniformOutput', false);
 
-        RootPath = { fullfile(fileparts(fileparts(mfilename('fullpath'))),'app'), fullfile(fileparts(fileparts(mfilename('fullpath'))),'FromGenentech'), ...
+        RootPath = { fullfile(fileparts(fileparts(mfilename('fullpath'))),'app'); fullfile(fileparts(fileparts(mfilename('fullpath'))),'FromGenentech'); ...
             fullfile(fileparts(fileparts(mfilename('fullpath'))),'utilities')};
 
-        job = createJob(c, 'AttachedFiles', [UDF_files, RootPath]);
+        job = createJob(c, 'AttachedFiles', [UDF_files; RootPath]);
     else
         job = [];
     end
